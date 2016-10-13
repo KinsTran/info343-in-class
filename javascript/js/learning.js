@@ -42,10 +42,13 @@ console.group("PRACTICE: Variables and Basic Types");
 //currently held in the variable `x`, and write the value
 //of `y` to the console log
 
+var y = x;
+y = 10;
 
 //now assign `y` the numeric value 10
 //what does x contain now? Write it to the console
-
+console.log(x);
+console.log(y);
 
 console.groupEnd();
 
@@ -78,11 +81,19 @@ console.group("PRACTICE: Strings");
 //with some text, and then create another string `s4`
 //and assign it the concatenation of `s2` and `s3`
 //then write it to the console so you can verify it worked.
+var s2 = "String s2";
+var s3 = "String s3";
 
+console.log(s2);
+console.log(s3);
 
+var s4 = s2 + s3;
+console.log(s4);
 //use the `.trim()` method to remove the leading and
 //trailing white space from this string
 var withSpaces = "    trim those spaces!     ";
+var withoutSpaces = withSpaces.trim();
+console.log(withoutSpaces);
 
 
 console.groupEnd();
@@ -158,8 +169,14 @@ console.group("PRACTICE: Objects");
 //now try adding a property named `web site` (with a space)
 //setting it to some string value...it's tricky...
 
+var course2 = {
+    curriculum: "INFO",
+    name: "Databases"
+}
 
-
+console.log(course2);
+course2["web site"] = "www.google.com";
+console.log(course2["web site"]);
 
 console.groupEnd();
 
@@ -199,11 +216,13 @@ console.group("PRACTICE: Arrays");
 //create another array of playing card suits
 //(clubs, diamonds, hearts, spades)
 
-
+var suites = ["clubs", "diamonds", "hearts", "spades"];
 //then add a new element named "jokers"
 //afer adding it, access it in the array
 //and log it to the console
-
+suites.push("jokers");
+console.log(suites[suites.length - 1]);
+console.log(suites.pop());
 
 
 console.groupEnd();
@@ -343,7 +362,10 @@ console.group("PRACTICE: Functions");
 //if they are equal to each other. Then call it a few times
 //with various numbers to test it.
 
-
+var myFunction = function(number1, number2) {
+    return number2 < number1 ? number2 : number1;
+}
+console.log(myFunction(1, 2), myFunction(2, 1), myFunction(3, 3));
 console.groupEnd();
 
 ///////////////////////////////////////////////////////////
@@ -417,8 +439,16 @@ function generateRandomNumbers(howMany, minimum, maximum) {
 }
 
 //>>> your code goes here!
+var arrayX = generateRandomNumbers(10, 1, 100);
+console.log(arrayX);
+arrayX.forEach(console.log);
+var double = function(x) {
+    x = x * 2;
+}
+// FIX THIS
+var arrayY = arrayX.map(double);
 
-
+console.log(arrayY);
 //now use the .sort() method on a generated array of random
 //numbers to sort them. Note that by default, sort will 
 //convert those numbers to strings and sort them alphabetically!
