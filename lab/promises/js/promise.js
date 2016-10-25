@@ -16,6 +16,18 @@
  
  //part 1 code
 
+var results = document.getElementById("weather-results");
+var weatherButton = document.getElementById("fetch-weather");
+
+weatherButton.onclick = function() {
+  fetch("https://freegeoip.net/json/").then(function(ipAddress) {
+    console.log(ipAddress);
+  }).catch(function(failure) {
+    console.log("FAILURE");
+  })
+}
+
+
  /*
   Part 2: Show the difference between parallel and serial promises
 
