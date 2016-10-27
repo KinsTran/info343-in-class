@@ -109,7 +109,8 @@ logValue("2016-10-27", formatAsDate);
  */
 var someNumber = 123456789;
 //logValue(...)
-
+logValue(someNumber, formatAsNumber);
+logValue(someNumber, formatAsCurrency);
 
 
 
@@ -135,7 +136,8 @@ var course = {
     curriculum: "INFO",
     num: 343,
     section: "D",
-    title: "Client-Side Web Development"
+    title: "Client-Side Web Development",
+    foobar: null
 };
 
 console.log("I'm taking", course.curriculum, course.num);
@@ -191,7 +193,9 @@ console.log("property names:", propNames);
  */
 
 
-
+propNames.forEach(function(key) {
+    console.log(key + " = " + course[key]);
+});
 
 
 
@@ -351,6 +355,15 @@ console.log("Total count", formatAsNumber(totalCount));
  * just reverse the logic in your compare function.
  */
 
+males.sort(function(name1, name2) {
+    return name2.count - name1.count;
+});
+var newMales = males.slice(0, 10);
+var maleNames = newMales.map(function(record) {
+    return record.name;
+})
+console.log(maleNames);
+console.log(maleNames.join(", "));
 
 
 /**
