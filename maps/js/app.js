@@ -7,7 +7,8 @@
  * library. For more info on Leaflet, see
  * http://leafletjs.com/ 
  */
-
+// abcd123abcd Username
+// fdkjdfjkdsfj@hotmail.com
 "use strict";
 
 //OpenStreetMap tile server (no access token required)
@@ -23,7 +24,7 @@ var osmTiles = {
 //for a list of map styles supported by Mapbox, as well
 //as full documentation about their map tiles API
 var mapboxTiles = {
-    accessToken: "...paste your access token here...",
+    accessToken: "pk.eyJ1IjoiYWJjZDEyM2FiY2QiLCJhIjoiY2l2bXAxZ3dpMDk2OTJ6cGJxZ3p1enZkMCJ9.Us47CgpF9qJZNsG6MNZmXQ",
     url: "https://api.tiles.mapbox.com/v4/{style}/{z}/{x}/{y}.png?access_token={accessToken}",
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     styles: {
@@ -49,3 +50,45 @@ var seattleCoords = [47.61, -122.33];
 //other map styles may have different zoom ranges
 var defaultZoom = 13;
 
+var map = L.map(mapDiv).setView(seattleCoords, defaultZoom);
+L.tileLayer(mapboxTiles.url, {
+    attribution: mapboxTiles.attribution, 
+    style: mapboxTiles.styles.streets,
+    accessToken: mapboxTiles.accessToken
+}).addTo(map);
+
+function onPosition(position) {
+    console.log(position);
+    var latlng = [position.coords.latitude, position.coords.longitude];
+    var marker = L.marker(latlng).addTo(map);
+    map.panTo(latlng);
+}
+
+function onPositionError(err) {
+    console.error(err);
+    alert(err.message);
+}
+
+if (navigator && navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(onPosition, onPositionError);
+}
+
+fetch(seattle911API)
+    .then(data => data.json())
+    .then(function(data) {
+        console.log(data);
+        data.forEach(function(record) {
+            var latlng = [record.latitude, record.longitude];
+            var marker = L.circleMarker(latlng, {
+                fillColor: "#0B3",
+                color: "#0B3",
+                fillOpacity: 0.5,
+            }).addTo(map);
+            var html = "<p>" + record.type + " " + moment(record.datetime).fromNow() + "</p>";
+            marker.bindPopup(html);
+        })
+    })
+    .catch(function(err) {
+        console.error(err);
+        alert(err.message);
+    });
